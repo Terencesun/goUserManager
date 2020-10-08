@@ -21,6 +21,17 @@ func Sort(data *[]int) {
 	}
 }
 
+func PathExists(path string) (bool, error) {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true, nil
+	}
+	if os.IsNotExist(err) {
+		return false, nil
+	}
+	return false, err
+}
+
 type Manager struct {
 	userInfos map[int]*model.User
 	maxId int
@@ -37,17 +48,6 @@ func (p *Manager) printList()  {
 	for _,v := range tmp {
 		fmt.Printf("%v	%v		%v		%v	\n", p.userInfos[v].Id, p.userInfos[v].Username, p.userInfos[v].Gender, p.userInfos[v].Age)
 	}
-}
-
-func PathExists(path string) (bool, error) {
-	_, err := os.Stat(path)
-	if err == nil {
-		return true, nil
-	}
-	if os.IsNotExist(err) {
-		return false, nil
-	}
-	return false, err
 }
 
 // 初始化manager
